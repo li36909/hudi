@@ -22,6 +22,7 @@ import org.apache.avro.generic.GenericRecord;
 import org.apache.hudi.avro.HoodieAvroUtils;
 import org.apache.hudi.common.config.TypedProperties;
 import org.apache.hudi.common.util.ReflectionUtils;
+import org.apache.hudi.common.util.StringUtils;
 import org.apache.hudi.exception.HoodieException;
 import org.apache.hudi.exception.HoodieKeyException;
 import org.apache.hudi.exception.HoodieNotSupportedException;
@@ -31,6 +32,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.List;
 
 public class KeyGenUtils {
@@ -101,7 +103,11 @@ public class KeyGenUtils {
 
   public static String getPartitionPath(GenericRecord record, String partitionPathField,
       boolean hiveStylePartitioning, boolean encodePartitionPath) {
-    String partitionPath = HoodieAvroUtils.getNestedFieldValAsString(record, partitionPathField, true);
+    String[] partitions = partitionPathField.split(",");
+    String partitionPath = StringUtils.join(Arrays.stream(partitions).map(field -> {
+      return HoodieAvroUtils.getNestedFieldValAsString(record, field, true);
+    }).toArray(String[]::new), "/");
+
     if (partitionPath == null || partitionPath.isEmpty()) {
       partitionPath = DEFAULT_PARTITION_PATH;
     }

@@ -1,0 +1,31 @@
+<configuration>
+  <property>
+    <name>hive.in.test</name>
+    <value>true</value>
+    <description>Internal marker for test.</description>
+  </property>
+  <property>
+    <name>datanucleus.schema.autoCreateAll</name>
+    <value>true</value>
+    <description>creates necessary schema on a startup if one doesn't exist.</description>
+  </property>
+  <property>
+    <name>hive.datetype.is.spark.compatible</name>
+    <value>true</value>
+    <description>Hive will use UTC timezone but spark expects local timezone. This flag to support Hive-3.1</description>
+  </property>
+  <property>
+    <name>hive.is.spark.compatible</name>
+    <value>true</value>
+    <description>This flag require to maintain compatible with hive-3.1</description>
+  </property>
+  <property>
+    <name>hive.metastore.schema.verification</name>
+    <value>false</value>
+    <description>Internal marker for test.</description>
+  </property>
+  <property>
+      <name>hive.cbo.enable</name>
+      <value>false</value>
+  </property>
+</configuration>

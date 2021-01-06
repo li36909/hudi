@@ -125,7 +125,7 @@ class DefaultSource extends RelationProvider
                               mode: SaveMode,
                               optParams: Map[String, String],
                               df: DataFrame): BaseRelation = {
-    val parameters = HoodieWriterUtils.parametersWithWriteDefaults(optParams)
+    val parameters = HoodieWriterUtils.combineAllParameters(optParams)
     val dfWithoutMetaCols = df.drop(HoodieRecord.HOODIE_META_COLUMNS.asScala:_*)
 
     if (parameters(OPERATION_OPT_KEY).equals(BOOTSTRAP_OPERATION_OPT_VAL)) {
